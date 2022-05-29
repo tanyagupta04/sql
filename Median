@@ -1,0 +1,9 @@
+/*calculationg median : Hackerrank Problem Weather Observation 20-- using partition, indexing and CTE*/
+
+
+with cte as
+(select *,
+ row_number() over (order by lat_n asc) as rn_asc,
+ row_number() over (order by lat_n desc) as rn_desc 
+ from station )
+select cast(avg(lat_n) AS DECIMAL(15,4)) from cte where abs(rn_asc-rn_desc)<=1;
